@@ -1,0 +1,15 @@
+[Unit]
+Description=Puma HTTP Server
+After=network.target
+
+
+[Service]
+Type=notify
+WatchdogSec=10
+WorkingDirectory=/srv/app/reddit
+ExecStart=/usr/local/bin/puma -C /srv/app/reddit/config/deploy/production.rb --dir /srv/app/reddit/ -d
+
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

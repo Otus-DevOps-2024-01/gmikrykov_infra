@@ -1,0 +1,47 @@
+{
+    "builders": [
+      {
+        "type": "yandex",
+        "token": "{{user `token`}}",
+        "folder_id": "{{user `folder_id`}}",
+        "source_image_family": "{{user `source_image_family`}}",
+        "subnet_id":           "e9b8l8umr5tdtb20suua",
+        "use_ipv4_nat":        true,
+        "image_name": "reddit-full",
+        "image_family": "reddit-base",
+        "ssh_username": "ubuntu",
+        "platform_id": "standard-v1"
+      }
+    ],
+    "provisioners": [
+      {
+        "type": "shell",
+        "script": "scripts/install_ruby.sh",
+        "execute_command": "sudo {{.Path}}"
+      },
+      {
+        "type": "shell",
+        "script": "scripts/install_mongodb.sh",
+        "execute_command": "sudo {{.Path}}"
+      },
+      {
+        "type": "shell",
+        "script": "scripts/deploy.sh",
+        "execute_command": "sudo {{.Path}}"
+      },
+      {
+        "type": "file",
+        "source": "files/puma.service",
+        "destination": "/tmp/puma.service"
+      },
+      {
+        "type": "shell",
+        "inline": [
+          "sudo cp /tmp/puma.service /etc/systemd/system/puma.service",
+          "sudo systemctl daemon-reload",
+          "sudo systemctl start puma.service",
+          "sudo systemctl enable puma.service"
+        ]
+      }
+    ]
+  }
