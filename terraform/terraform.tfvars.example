@@ -1,0 +1,8 @@
+yc_service_account_key_file = "../../key.json"
+yc_cloud_id                 = "XXXXXXXXXXXXXXXXX"
+yc_folder_id                = "XXXXXXXXXXXXXXXXX"
+yc_region                   = "ru-central1-a"
+yc_subnet_id                = "XXXXXXXXXXXXXXXXX"
+public_key_path             = "~/.ssh/id_rsa"
+
+reddit_instance_count       = 3

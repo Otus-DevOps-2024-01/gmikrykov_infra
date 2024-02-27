@@ -5,11 +5,9 @@
  bastion_IP = 84.201.158.140
  someinternalhost_IP = 10.128.0.29
 
- Команда запуска packer для создания образа:
-  - packer  build -var-file ./variables.json ./ubuntu16.json
+ Все задания (также со * ) выполнены, увеличивать количество нод app можно в файле terraform.tfvars
+ переменная reddit_instance_count
 
- Команда запуска packer для создания полного образа с приложением:
-  - packer  build -var-file ./variables.json ./immutable.json
 
- Запуск ВМ с помощью подготовленного образа:
-  - ./config-scripts/create-reddit-vm.sh
+ Команда запуска terraform  для разворачивания инфраструктуры:
+  - terraform apply
