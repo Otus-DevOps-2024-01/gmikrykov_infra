@@ -1,3 +1,10 @@
+provider "yandex" {
+  cloud_id                 = var.yc_cloud_id
+  folder_id                = var.yc_folder_id
+  zone                     = var.yc_region
+  service_account_key_file = var.yc_service_account_key_file
+}
+
 terraform {
   required_providers {
     yandex = {
@@ -8,12 +15,6 @@ terraform {
   required_version = ">= 0.13"
 }
 
-provider "yandex" {
-  cloud_id                 = var.yc_cloud_id
-  folder_id                = var.yc_folder_id
-  zone                     = var.yc_region
-  service_account_key_file = var.yc_service_account_key_file
-}
 
 resource "yandex_vpc_address" "app_vpc" {
   count = var.reddit_instance_count
