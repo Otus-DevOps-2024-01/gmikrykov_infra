@@ -10,6 +10,12 @@ variable "yc_region" {
   default     = "ru-central1-a"
 }
 
+variable "yc_provider" {
+  type        = string
+  description = "Yandex Cloud provider"
+  default     = "yandex-cloud/yandex"
+}
+
 variable "yc_cloud_id" {
   type        = string
   description = "Yandex Cloud id"
