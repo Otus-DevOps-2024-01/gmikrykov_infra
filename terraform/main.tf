@@ -5,15 +5,15 @@ provider "yandex" {
   service_account_key_file = var.yc_service_account_key_file
 }
 
-terraform {
-  required_providers {
-    yandex = {
-      source = "yandex-cloud/yandex"
-      version = "0.109.0"
-    }
-  }
-  required_version = ">= 0.13"
-}
+#terraform {
+#  required_providers {
+#    yandex = {
+#      source = "yandex-cloud/yandex",
+#      version = "v0.109.0"
+#    }
+#  }
+#  required_version = ">= 0.13"
+#}
 
 
 resource "yandex_vpc_address" "app_vpc" {
