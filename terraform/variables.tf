@@ -31,6 +31,11 @@ variable "public_key_path" {
   description = "Key Path"
 }
 
+variable "private_key_path" {
+  type        = string
+  description = "Private Key Path"
+}
+
 variable "yc_subnet_id" {
   type        = string
   description = "Yandex Cloud Subnet ID"
