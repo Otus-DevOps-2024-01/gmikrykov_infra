@@ -27,7 +27,7 @@ resource "yandex_lb_target_group" "app" {
     for_each = range(var.reddit_instance_count)
     iterator = counter
     content {
-      subnet_id = var.yc_subnet_id
+
       address   = yandex_compute_instance.app[counter.key].network_interface[0].ip_address
     }
   }

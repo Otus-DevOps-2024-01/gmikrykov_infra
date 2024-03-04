@@ -4,71 +4,53 @@ provider "yandex" {
   zone                     = var.yc_region
   service_account_key_file = var.yc_service_account_key_file
 }
-
-#terraform {
-#  required_providers {
-#    yandex = {
-#      source = "yandex-cloud/yandex",
-#      version = "v0.109.0"
-#    }
-#  }
-#  required_version = ">= 0.13"
-#}
+terraform {
+    backend "s3" {
+    endpoint = "https://storage.yandexcloud.net"
+    bucket = "backend-terraform-gmikryukov"
+    region = "ru-central1-a"
+    key    = "../../key.json"
+    access_key = yandex_iam_service_account_static_access_key.sa-static-key.access_key
+    secret_key = yandex_iam_service_account_static_access_key.sa-static-key.secret_key
 
 
-resource "yandex_vpc_address" "app_vpc" {
-  count = var.reddit_instance_count
+    skip_region_validation      = true
+    skip_credentials_validation = true
+    # skip_requesting_account_id  = true # Необходимая опция Terraform для версии 1.6.1 и старше.
+    # skip_s3_checksum            = true # Необходимая опция при описании бэкенда для Terraform версии 1.6.3 и старше.
 
-  name = "app-${count.index}"
-
-  external_ipv4_address {
-    zone_id = var.yc_region
   }
 }
-
-resource "yandex_compute_instance" "app" {
-  count = var.reddit_instance_count
-  name  = "reddit-app-${count.index}"
-
-  resources {
-    cores  = 2
-    memory = 2
-  }
-
-  boot_disk {
-    initialize_params {
-      image_id = "fd8v7i965ok419rg23h2"
-      name     = "reddit-${count.index}-boot"
-      size     = 10
-    }
-  }
-
-  network_interface {
-    nat_ip_address = yandex_vpc_address.app_vpc[count.index].external_ipv4_address[0].address
-    subnet_id      = var.yc_subnet_id
-    nat            = true
-  }
-
-  metadata = {
-    ssh-keys = "ubuntu:${file(var.public_key_path)}"
-  }
-
-  connection {
-    type  = "ssh"
-    host  = yandex_vpc_address.app_vpc[count.index].external_ipv4_address[0].address
-    user  = "ubuntu"
-    agent = false
-    # путь до приватного ключа
-    private_key = file(var.private_key_path)
-  }
-
-  provisioner "file" {
-    source      = "files/puma.service"
-    destination = "/tmp/puma.service"
-  }
-
-  provisioner "remote-exec" {
-    script = "files/deploy.sh"
-  }
-
+module "app" {
+  source          = "./modules/app"
+  public_key_path = var.public_key_path
+  app_disk_image  = var.app_disk_image
+  private_key_path= var.private_key_path
+  subnet_id = var.subnet_id
 }
+
+module "db" {
+  source          = "./modules/db"
+  public_key_path = var.public_key_path
+  db_disk_image   = var.db_disk_image
+  subnet_id = var.subnet_id
+  private_key_path= var.private_key_path
+}
+
+  # connection {
+  #   type  = "ssh"
+  #   host  = yandex_vpc_address.app_vpc[count.index].external_ipv4_address[0].address
+  #   user  = "ubuntu"
+  #   agent = false
+  #   # путь до приватного ключа
+  #   private_key = file(var.private_key_path)
+  # }
+
+  # provisioner "file" {
+  #   source      = "files/puma.service"
+  #   destination = "/tmp/puma.service"
+  # }
+
+  # provisioner "remote-exec" {
+  #   script = "files/deploy.sh"
+  # }
