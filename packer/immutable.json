@@ -5,7 +5,7 @@
         "token": "{{user `token`}}",
         "folder_id": "{{user `folder_id`}}",
         "source_image_family": "{{user `source_image_family`}}",
-        "subnet_id":           "e9b8l8umr5tdtb20suua",
+        "subnet_id":           "{{user `subnet_id`}}",
         "use_ipv4_nat":        true,
         "image_name": "reddit-full",
         "image_family": "reddit-base",
