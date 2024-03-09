@@ -19,3 +19,8 @@ variable "private_key_path" {
   type        = string
   description = "Private Key Path"
 }
+
+variable "metadata_path" {
+  type        = string
+  description = "Metadata  Path"
+}
