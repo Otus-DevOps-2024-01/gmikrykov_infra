@@ -20,7 +20,7 @@ variable "private_key_path" {
   description = "Private Key Path"
 }
 
-variable "metadata_path" {
-  type        = string
-  description = "Metadata  Path"
-}
+# variable "metadata_path" {
+#   type        = string
+#   description = "Metadata  Path"
+# }

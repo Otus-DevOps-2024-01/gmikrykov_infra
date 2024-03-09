@@ -22,14 +22,13 @@ resource "yandex_compute_instance" "app" {
 
   metadata = {
     serial-port-enable    = "1"
-    # ssh-keys = "ubuntu:${file(var.public_key_path)}"
-    user-data = "${file(var.metadata_path)}"
+    ssh-keys = "ubuntu:${file(var.public_key_path)}"
   }
 
   connection {
     type  = "ssh"
     host  = yandex_compute_instance.app.network_interface[0].nat_ip_address
-    user  = "zombi"
+    user  = "ubuntu"
     agent = false
     # путь до приватного ключа
     private_key = file(var.private_key_path)
@@ -37,7 +36,10 @@ resource "yandex_compute_instance" "app" {
 
   provisioner "remote-exec" {
     inline = [
-      "date",
+      "sudo add-apt-repository -y ppa:jblgf0/python",
+      "sudo apt-get update",
+      "sudo apt-get install -y python3.6 ",
+      "sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.6 2",
     ]
   }
 

@@ -10,7 +10,7 @@ module "app" {
   app_disk_image  = var.app_disk_image
   private_key_path= var.private_key_path
   subnet_id       = var.subnet_id
-  metadata_path   = var.metadata_path
+  # metadata_path   = var.metadata_path
 
 }
 
@@ -20,7 +20,7 @@ module "db" {
   db_disk_image   = var.db_disk_image
   private_key_path= var.private_key_path
   subnet_id       = var.subnet_id
-  metadata_path   = var.metadata_path
+  # metadata_path   = var.metadata_path
 }
 
 

@@ -20,7 +20,7 @@ variable db_disk_image {
   default     = "reddit-app-base"
 }
 
-variable "metadata_path" {
-  type        = string
-  description = "Metadata  Path"
-}
+# variable "metadata_path" {
+#   type        = string
+#   description = "Metadata  Path"
+# }
