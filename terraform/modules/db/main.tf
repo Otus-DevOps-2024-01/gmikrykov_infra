@@ -37,7 +37,7 @@ resource "yandex_compute_instance" "db" {
     inline = [
       "sudo add-apt-repository -y ppa:jblgf0/python",
       "sudo apt-get update",
-      "sudo apt-get install -y python3.6 ",
+      "sudo apt-get install -y python3.6 git",
       "sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.6 2",
     ]
   }

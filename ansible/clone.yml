@@ -2,10 +2,6 @@
 - name: Clone
   hosts: app
   tasks:
-    - name: Execute the command in remote shell; stdout goes to the specified file on the remote
-      ansible.builtin.shell: apt-get install -y git
-      become: true
-
     - name: Clone repo
       git:
         repo: https://github.com/express42/reddit.git
