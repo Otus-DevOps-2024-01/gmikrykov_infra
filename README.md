@@ -1,12 +1,15 @@
  # gmikrykov_infra
- testapp_IP = 51.250.94.146
- testapp_port = 9292
+ Packer: для запуска сборки образов используем:
+  - packer build -var-file ./variables.json ./app.json
+  - packer build -var-file ./variables.json ./db.json
 
- bastion_IP = 84.201.158.140
- someinternalhost_IP = 10.128.0.29
+  Tefrrraform: меняем ИД образов дисков созданных в Packer в файле terraform.tfvars
+   - cd terraform/stage/
+   - terraform plan
+   - terraform apply
 
- Все задания (также со * ) выполнены
-
-
- Команда запуска terraform  для разворачивания инфраструктуры:
-  - terraform apply
+  Ansible: запуск
+   - ansible-playbook -i inventory.sh clone.yml - плейбук с использованием динамического Inventory которвый берет ИП адреса из terraform output
+   - ansible-playbook -i inventory.json clone.yml - Использование формата Json
+   - ansible-playbook -i inventory.yml clone.yml  - Использование формата YAML
+   - ansible-playbook -i inventory.ini clone.yml  - Использование формата ini

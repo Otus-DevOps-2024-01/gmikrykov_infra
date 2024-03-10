@@ -19,3 +19,8 @@ variable db_disk_image {
   description = "Disk image for reddit app"
   default     = "reddit-app-base"
 }
+
+variable "metadata_path" {
+  type        = string
+  description = "Metadata  Path"
+}
