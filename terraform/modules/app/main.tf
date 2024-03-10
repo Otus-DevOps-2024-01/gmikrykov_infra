@@ -38,6 +38,7 @@ resource "yandex_compute_instance" "app" {
     inline = [
       "sudo add-apt-repository -y ppa:jblgf0/python",
       "sudo apt-get update",
+      "sleep 20",
       "sudo apt-get install -y python3.6 git",
       "sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.6 2",
     ]
