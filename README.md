@@ -1,15 +1,13 @@
  # gmikrykov_infra
- Packer: для запуска сборки образов используем:
-  - packer build -var-file ./variables.json ./app.json
-  - packer build -var-file ./variables.json ./db.json
+ Ansible: Используется динамический инвентори и разные плейбуки
+ - ansible-playbook -i inventory.sh  reddit_app2.yml
 
-  Tefrrraform: меняем ИД образов дисков созданных в Packer в файле terraform.tfvars
-   - cd terraform/stage/
-   - terraform plan
-   - terraform apply
+ Packer:
+- добавлена поддержка Ansible provisioners
 
-  Ansible: запуск
-   - ansible-playbook -i inventory.sh clone.yml - плейбук с использованием динамического Inventory которвый берет ИП адреса из terraform output
-   - ansible-playbook -i inventory.json clone.yml - Использование формата Json
-   - ansible-playbook -i inventory.yml clone.yml  - Использование формата YAML
-   - ansible-playbook -i inventory.ini clone.yml  - Использование формата ini
+    "provisioners": [
+      {
+        "type": "ansible",
+        "playbook_file": "ansible/packer_app.yml"
+      }
+    ]
