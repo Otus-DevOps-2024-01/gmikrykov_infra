@@ -1,6 +1,4 @@
  # gmikrykov_infra
- Ansible: Для запуска используется команда
- - ansible-playbook playbooks/site.yml
-
- Ansible: Для запуска с использованием динамического инвентори используется команда
- - ansible-playbook -i inventory.sh  playbooks/site.yml
+Docker
+ - docker build -t reddit:latest .
+ - docker run --name reddit -d --network=host reddit:latest
