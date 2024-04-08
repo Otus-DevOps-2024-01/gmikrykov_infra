@@ -1,13 +1,4 @@
  # gmikrykov_infra
- Ansible: Используется динамический инвентори и разные плейбуки
- - ansible-playbook -i inventory.sh  reddit_app2.yml
-
- Packer:
-- добавлена поддержка Ansible provisioners
-
-    "provisioners": [
-      {
-        "type": "ansible",
-        "playbook_file": "ansible/packer_app.yml"
-      }
-    ]
+ Docker:
+ - созданы Dockerfile для ui, post-py, comment
+ - для сборки образов comment и ui применил multi-staging сборку тем самым удалось уменьшить размер образов с ~700 MB до ~130 MB
