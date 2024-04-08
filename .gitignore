@@ -8,4 +8,4 @@ variables.json
 .DS_Store
 vault.key
 jdauphant.nginx
-
+.env
