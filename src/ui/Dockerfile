@@ -5,7 +5,7 @@ RUN apk --no-cache --update add build-base && \
     #--no-ri --no-rdoc
 
 WORKDIR /app
-COPY Gemfile* .
+COPY Gemfile* ./
 RUN bundle install
 
 FROM ruby:2.3-alpine as production
