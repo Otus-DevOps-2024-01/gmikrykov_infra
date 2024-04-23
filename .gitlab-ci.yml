@@ -15,8 +15,19 @@ before_script:
 
 build_job:
   stage: build
+  variables:
+    DOCKER_IMAGE_NAME: reddit
+    DOCKER_BUILD_TAG: v1
   script:
-    - echo 'Building'
+    - echo "build"
+    - |
+      docker login "$CI_REGISTRY" \
+        --username "$CI_REGISTRY_USER" \
+        --password "$CI_REGISTRY_PASSWORD"
+    - docker build -t $CI_REGISTRY/$CI_PROJECT_PATH/$DOCKER_IMAGE_NAME:$DOCKER_BUILD_TAG .
+    - docker push "$CI_REGISTRY/$CI_PROJECT_PATH/$DOCKER_IMAGE_NAME:$DOCKER_BUILD_TAG"
+    - docker rmi "$CI_REGISTRY/$CI_PROJECT_PATH/$DOCKER_IMAGE_NAME:$DOCKER_BUILD_TAG"
+
 
 test_unit_job:
   stage: test
@@ -40,7 +51,14 @@ deploy_dev_job:
 
 branch review:
   stage: review
-  script: echo "Deploy to $CI_ENVIRONMENT_SLUG"
+  script:
+    - echo "Deploy to $CI_ENVIRONMENT_SLUG"
+    - |
+      docker login "$CI_REGISTRY" \
+        --username "$CI_REGISTRY_USER" \
+        --password "$CI_REGISTRY_PASSWORD"
+    - docker run --name=$DOCKER_IMAGE_NAME --restart=always -d $CI_REGISTRY/$CI_PROJECT_PATH/$DOCKER_IMAGE_NAME:$DOCKER_BUILD_TAG
+
   environment:
     name: branch/$CI_COMMIT_REF_NAME
     url: http://$CI_ENVIRONMENT_SLUG.example.com
