@@ -1,4 +1,4 @@
-prometheus_client==0.0.21
+prometheus_client==0.1.0
 flask==0.12.3
 # #Flask==1
 # #markupsafe==2.0.1

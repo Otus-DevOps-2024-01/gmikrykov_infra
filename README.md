@@ -1,5 +1,5 @@
  # gmikrykov_infra
 
- CICD:
- - Создан и протестирован .gitlab-ci.yml
- - Проверялось и тестирвоалос на своем GitLab - https://git.gm73.ru
+ Prometheus:
+ - образы запушены на docker.hub (https://hub.docker.com/repository/docker/gmikrykov/)
+ - также добавлен эксппортер mongo_db
