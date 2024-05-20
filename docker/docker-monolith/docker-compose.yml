@@ -43,39 +43,8 @@ services:
       - '--storage.tsdb.path=/prometheus'
       - '--storage.tsdb.retention=1d' #
 
-  node-exporter:
-    image: prom/node-exporter:v0.15.2
-    user: root
-    volumes:
-      - /proc:/host/proc:ro
-      - /sys:/host/sys:ro
-      - /:/rootfs:ro
-    networks:
-      - reddit
-      - front_net
-    command:
-      - '--path.procfs=/host/proc'
-      - '--path.sysfs=/host/sys'
-      - '--collector.filesystem.ignored-mount-points="^/(sys|proc|dev|host|etc)($$|/)"'
-
-  mongo_exporter:
-    container_name : mongodb_exporter
-    hostname: mongodb_exporter
-    image: registry.cn-hangzhou.aliyuncs.com/yangyuanpeng/mongodb_exporter:prometheus
-    restart: on-failure
-    environment:
-      - TZ= Europe/Moscow
-      - mongodb_exporter_IP=post_db #mongpodb ip
-      - mongodb_port=27017   #mongodb port
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-    networks:
-      - reddit
-      - front_net
-
 volumes:
   post_db:
-  prometheus_data:
 
 networks:
   reddit:
