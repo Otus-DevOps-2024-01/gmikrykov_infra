@@ -3,6 +3,8 @@ services:
   post_db:
     image: mongo:latest
     container_name: ${DB_NAME}
+    environment:
+      - ZIPKIN_ENABLED=${ZIPKIN_ENABLED}
     volumes:
       - post_db:/data/db
     networks:
@@ -11,6 +13,8 @@ services:
     build: ./ui
     image: ${USER_NAME}/ui:1.0
     container_name: ${UI_NAME}
+    environment:
+      - ZIPKIN_ENABLED=${ZIPKIN_ENABLED}
     ports:
       - ${UI_PORT}:9292/tcp
     networks:
@@ -25,6 +29,7 @@ services:
     image: ${USER_NAME}/post
     environment:
       - POST_DATABASE_HOST=post_db
+      - ZIPKIN_ENABLED=${ZIPKIN_ENABLED}
       - POST_DATABASE=posts
     depends_on:
       - post_db
@@ -43,6 +48,8 @@ services:
     build: ./comment
     image: ${USER_NAME}/comment:1.0
     container_name: ${COMMENT_NAME}
+    environment:
+      - ZIPKIN_ENABLED=${ZIPKIN_ENABLED}
     networks:
       - reddit
       - front_net

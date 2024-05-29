@@ -4,17 +4,18 @@ services:
     image: openzipkin/zipkin:2.21.0
     ports:
       - "9411:9411"
+    networks:
+      - reddit
+      - front_net
 
   fluentd:
     image: ${USER_NAME}/fluentd
-    # platform: linux/x86_64
     ports:
       - "24224:24224"
       - "24224:24224/udp"
 
   elasticsearch:
     image: elasticsearch:7.4.0
-    platform: linux/x86_64
     environment:
       - ELASTIC_CLUSTER=false
       - CLUSTER_NODE_MASTER=true
@@ -28,6 +29,10 @@ services:
   kibana:
     #image: kibana:7.4.0
     image: kibana:7.4.0
-    platform: linux/x86_64
     ports:
       - "5601:5601"
+
+
+networks:
+  reddit:
+  front_net:
