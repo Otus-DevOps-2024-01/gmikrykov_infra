@@ -1,0 +1,21 @@
+all:
+  vars:
+    ansible_user: ubuntu
+    ansible_ssh_private_key_file: ./id_rsa
+  children:
+    k8s-masters:
+      hosts:
+        master:
+          ansible_host: 62.84.124.121
+          ansible_port: 22
+    k8s-nodes:
+      hosts:
+        node-0:
+          ansible_host: 158.160.56.176
+          ansible_port: 22
+        node-1:
+          ansible_host: 158.160.38.75
+          ansible_port: 22
+        node-2:
+          ansible_host: 158.160.45.173
+          ansible_port: 22

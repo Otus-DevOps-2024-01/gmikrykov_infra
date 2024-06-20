@@ -1,0 +1,24 @@
+---
+- name: Configure Sandboxes
+  hosts: all
+  become: true
+  gather_facts: true
+  tasks:
+    - name: Base
+      ansible.builtin.include_tasks: tasks/base.yml
+    - name: Install Docker & Docker Compose
+      ansible.builtin.include_tasks: tasks/docker.yml
+    - name: Create users
+      ansible.builtin.include_tasks: tasks/create_users.yml
+      when: users is defined
+    - name: Create k8s cluster
+      ansible.builtin.include_tasks: tasks/k8s.yml
+    - name: k8s Master install
+      ansible.builtin.include_tasks: tasks/k8s_main.yml
+      when: inventory_hostname in groups["k8s-masters"]
+    - name: k8s nodes install
+      ansible.builtin.include_tasks: tasks/k8s_node_main.yml
+      when: inventory_hostname in groups["k8s-nodes"]
+  handlers:
+    - name: Handlers
+      ansible.builtin.import_tasks: handlers/main.yml

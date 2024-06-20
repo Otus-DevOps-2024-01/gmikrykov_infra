@@ -1,0 +1,28 @@
+- name: Restart Docker
+  ansible.builtin.systemd:
+    name: docker
+    state: restarted
+    daemon_reload: true
+
+- name: Restart Containerd
+  ansible.builtin.systemd:
+    name: containerd
+    state: restarted
+    daemon_reload: true
+
+- name: Deploy kubernetes dashboard into cluster
+  when: init_cluster and started_kubelet and enable_dashboard
+  command: |
+    kubectl --kubeconfig={{ kubeadmin_config }} \
+        apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/aio/deploy/recommended/kubernetes-dashboard.yaml
+  register: create_result
+  until: create_result.rc == 0
+  retries: 5
+  delay: 2
+  ignore_errors: true
+
+- name: Recreate kube-dns
+  command: kubectl --kubeconfig={{ kubeadmin_config }} -n kube-system delete pods -l k8s-app=kube-dns
+  delegate_to: "{{ groups['k8s-masters'][0] }}"
+  run_once: true
+  ignore_errors: true

@@ -1,0 +1,11 @@
+{
+{% if docker_metrics_enabled is defined and docker_metrics_enabled | bool %}
+  "metrics-addr": "127.0.0.1:9323",
+{% endif %}
+{% if docker_default_address_pools is defined and docker_default_address_pools | length > 0 %}
+  "default-address-pools": {{ docker_default_address_pools | to_json }},
+{% endif %}
+  "bip": "172.17.0.1/16",
+  "experimental": false,
+  "registry-mirrors": ["https://mirror.gcr.io", "https://daocloud.io", "https://c.163.com/", "https://registry.docker-cn.com"]
+}
