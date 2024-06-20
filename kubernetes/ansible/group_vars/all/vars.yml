@@ -1,0 +1,51 @@
+users:
+  - { name: zombi, state: present, sudo: true }
+
+# Docker Variables
+docker_metrics_enabled: false
+docker_default_address_pools:
+  - base: 172.18.0.0/16
+    size: 24
+  - base: 192.168.0.0/16
+    size: 24
+
+# PHP Variables
+php:
+  enabled: false
+
+master_ip: "{{ hostvars[groups['k8s-masters'][0]]['ansible_default_ipv4'].address | default(groups['k8s-masters'][0]) }}"
+kube_version: v1.19.2
+token: b0f7b8.8d1767876297d85c
+init_opts: ""
+kubeadm_opts: ""
+# For example:
+# kubeadm_opts: '--apiserver-cert-extra-sans "k8s.domain.com,kubernetes.domain.com"'
+
+service_cidr: "10.96.0.0/12"
+pod_network_cidr: "10.244.0.0/16"
+
+# Network implementation('flannel', 'calico', 'canal')
+network: calico
+network_interface: ""
+enable_dashboard: yes
+
+insecure_registries: ['gcr.io']
+
+systemd_dir: /lib/systemd/system
+system_env_dir: /etc/sysconfig
+network_dir: /etc/kubernetes/network
+kubeadmin_config: /etc/kubernetes/admin.conf
+kube_addon_dir: /etc/kubernetes/addon
+
+additional_features:
+  helm: false
+  metallb: false
+  healthcheck: false
+
+tmp_dir: /tmp/kubeadm-ansible-files
+
+# Container runtimes ('containerd', 'crio')
+container_runtime: containerd
+
+# helm helm version
+helm_version: "v2.17.0"
