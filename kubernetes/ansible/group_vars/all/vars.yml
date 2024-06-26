@@ -16,8 +16,8 @@ php:
 master_ip: "{{ hostvars[groups['k8s-masters'][0]]['ansible_default_ipv4'].address | default(groups['k8s-masters'][0]) }}"
 kube_version: v1.19.2
 token: b0f7b8.8d1767876297d85c
-init_opts: ""
-kubeadm_opts: ""
+init_opts: "--apiserver-advertise-address=0.0.0.0"
+kubeadm_opts: "--apiserver-advertise-address=0.0.0.0"
 # For example:
 # kubeadm_opts: '--apiserver-cert-extra-sans "k8s.domain.com,kubernetes.domain.com"'
 
